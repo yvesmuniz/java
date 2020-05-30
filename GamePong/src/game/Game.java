@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
 import game.display.Display;
+import game.input.KeyManager;
 import game.states.StateManager;
 
 public class Game implements Runnable{//possibilita a implementação do método Run()	; 
@@ -15,18 +16,21 @@ public class Game implements Runnable{//possibilita a implementação do método
 	private StateManager sm;
 	public static final int WIDTH = 400;
 	public static final int HEIGHT = 300;
+	private KeyManager km;
+	
 	
 	public Game() {
 		display = new Display("Pong", 400, 300);
 		sm = new StateManager();
+		km = new KeyManager();
 		display.setKeyListener(sm);
+		display.setKeyListener(km);
+		StateManager.setState(StateManager.MENU);	
 	}
-
-
 	@Override
 	public void run() {
 		init();
-		int fps = 60;
+		int FPS = 60;
 		double timePerTick = 1000000000 / 60 ;//nano segundos/ tempo ideal
 		double delta = 0;
 		long now;
@@ -51,14 +55,10 @@ public class Game implements Runnable{//possibilita a implementação do método
 		
 		
 	}
-
-
-
-
 	private void update() {
 		if(StateManager.getState() == null) return; //segurança
 		sm.update();
-		
+		km.update();
 	}
 	private void render() {
 		BufferStrategy bs = display.getBufferStrategy();//aplicar
@@ -76,9 +76,7 @@ public class Game implements Runnable{//possibilita a implementação do método
 		g.dispose();//disponibilizar 
 		bs.show();//apresentar na tela
 	}
-	
-	
-	
+
 	public synchronized void start() {
 		if(thread != null) return;
 		thread = new Thread(this);//criando a thread na classe que tenha o método run()

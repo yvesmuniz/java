@@ -7,7 +7,5 @@ public interface State {
 	void update();
 	void render(Graphics g);
 	void KeyPressed(int cod);
-	void KeyReleased(int cod);
-	
-	
+	void KeyReleased(int cod);	
 }

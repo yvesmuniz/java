@@ -45,10 +45,6 @@ public class FPSState implements State {
 		
 		String text = "FPS: "+aux;//renderizando texto
 		g.drawString(text, g.getFontMetrics().stringWidth(text), g.getFontMetrics().getHeight());
-		
-		
-		
-		
 	}
 
 	@Override
